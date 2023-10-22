@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.mballem.curso.security.domain.Especialidade;
 
-public interface EspecialidadeRepository extends JpaRepository<Especialidade, Long>{
+public interface EspecialidadeRepository extends JpaRepository<Especialidade, Long> {
 
 	@Query("select e from Especialidade e where e.titulo like :search%")
 	Page<Especialidade> findAllByTitulo(String search, Pageable pageable);
@@ -21,10 +21,7 @@ public interface EspecialidadeRepository extends JpaRepository<Especialidade, Lo
 	@Query("select e from Especialidade e where e.titulo IN :titulos")
 	Set<Especialidade> findByTitulos(String[] titulos);
 
-	@Query("select e from Especialidade e "
-			+ "join e.medicos m "
-			+ "where m.id = :id") 
+	@Query("select e from Especialidade e " + "join e.medicos m " + "where m.id = :id")
 	Page<Especialidade> findByIdMedico(Long id, Pageable pageable);
 
-	
 }

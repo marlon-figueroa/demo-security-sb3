@@ -14,16 +14,16 @@ public class MedicoService {
 
 	@Autowired
 	private MedicoRepository repository;
-	
+
 	@Transactional(readOnly = true)
 	public Medico buscarPorUsuarioId(Long id) {
-		
+
 		return repository.findByUsuarioId(id).orElse(new Medico());
 	}
 
 	@Transactional(readOnly = false)
 	public void salvar(Medico medico) {
-		
+
 		repository.save(medico);
 	}
 
@@ -40,7 +40,7 @@ public class MedicoService {
 
 	@Transactional(readOnly = true)
 	public Medico buscarPorEmail(String email) {
-		
+
 		return repository.findByUsuarioEmail(email).orElse(new Medico());
 	}
 
@@ -52,13 +52,13 @@ public class MedicoService {
 
 	@Transactional(readOnly = true)
 	public List<Medico> buscarMedicosPorEspecialidade(String titulo) {
-		
+
 		return repository.findByMedicosPorEspecialidade(titulo);
 	}
 
 	@Transactional(readOnly = true)
 	public boolean existeEspecialidadeAgendada(Long idMed, Long idEsp) {
-		
+
 		return repository.hasEspecialidadeAgendada(idMed, idEsp).isPresent();
 	}
 }

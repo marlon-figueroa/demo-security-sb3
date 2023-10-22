@@ -13,29 +13,29 @@ import jakarta.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "agendamentos") 
+@Table(name = "agendamentos")
 public class Agendamento extends AbstractEntity {
-	
-	@ManyToOne
-	@JoinColumn(name="id_especialidade")
-	private Especialidade especialidade;
-	
-	@ManyToOne
-	@JoinColumn(name="id_medico")
-	private Medico medico;
-	
-	@ManyToOne
-	@JoinColumn(name="id_paciente")
-	private Paciente paciente;
-	
-	@ManyToOne
-	@JoinColumn(name="id_horario")
-	private Horario horario; 
 
-	@Column(name="data_consulta")
+	@ManyToOne
+	@JoinColumn(name = "id_especialidade")
+	private Especialidade especialidade;
+
+	@ManyToOne
+	@JoinColumn(name = "id_medico")
+	private Medico medico;
+
+	@ManyToOne
+	@JoinColumn(name = "id_paciente")
+	private Paciente paciente;
+
+	@ManyToOne
+	@JoinColumn(name = "id_horario")
+	private Horario horario;
+
+	@Column(name = "data_consulta")
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate dataConsulta;
-	
+
 	public Especialidade getEspecialidade() {
 		return especialidade;
 	}

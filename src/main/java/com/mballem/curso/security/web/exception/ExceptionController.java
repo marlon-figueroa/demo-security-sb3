@@ -18,7 +18,7 @@ public class ExceptionController {
 		model.addObject("message", ex.getMessage());
 		return model;
 	}
-	
+
 	@ExceptionHandler(AcessoNegadoException.class)
 	public ModelAndView acessoNegadoException(AcessoNegadoException ex) {
 		ModelAndView model = new ModelAndView("error");

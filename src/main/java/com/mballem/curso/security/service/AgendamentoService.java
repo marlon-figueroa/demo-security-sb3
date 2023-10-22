@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class AgendamentoService {
-	
+
 	@Autowired
 	private AgendamentoRepository repository;
 	@Autowired
@@ -29,13 +29,13 @@ public class AgendamentoService {
 
 	@Transactional(readOnly = true)
 	public List<Horario> buscarHorariosNaoAgendadosPorMedicoIdEData(Long id, LocalDate data) {
-		
+
 		return repository.findByMedicoIdAndDataNotHorarioAgendado(id, data);
 	}
 
 	@Transactional(readOnly = false)
 	public void salvar(Agendamento agendamento) {
-		
+
 		repository.save(agendamento);
 	}
 
@@ -57,7 +57,7 @@ public class AgendamentoService {
 
 	@Transactional(readOnly = true)
 	public Agendamento buscarPorId(Long id) {
-		
+
 		return repository.findById(id).get();
 	}
 
@@ -68,14 +68,13 @@ public class AgendamentoService {
 		ag.setEspecialidade(agendamento.getEspecialidade());
 		ag.setHorario(agendamento.getHorario());
 		ag.setMedico(agendamento.getMedico());
-				
+
 	}
 
 	@Transactional(readOnly = true)
 	public Agendamento buscarPorIdEUsuario(Long id, String email) {
-		
-		return repository
-				.findByIdAndPacienteOrMedicoEmail(id, email)
+
+		return repository.findByIdAndPacienteOrMedicoEmail(id, email)
 				.orElseThrow(() -> new AcessoNegadoException("Acesso negado ao usuário: " + email));
 	}
 

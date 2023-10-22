@@ -9,11 +9,12 @@ import jakarta.persistence.MappedSuperclass;
 
 @SuppressWarnings("serial")
 @MappedSuperclass
-public abstract class AbstractEntity implements Serializable  {
+public abstract class AbstractEntity implements Serializable {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	public AbstractEntity() {
 		super();
 	}
@@ -25,7 +26,7 @@ public abstract class AbstractEntity implements Serializable  {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public boolean hasNotId() {
 		return id == null;
 	}
@@ -33,7 +34,7 @@ public abstract class AbstractEntity implements Serializable  {
 	public boolean hasId() {
 		return id != null;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -62,5 +63,5 @@ public abstract class AbstractEntity implements Serializable  {
 	@Override
 	public String toString() {
 		return String.format("Entidade %s id: %s", this.getClass().getName(), getId());
-	}	
+	}
 }

@@ -8,33 +8,33 @@ import com.mballem.curso.security.service.PacienteService;
 
 public class PacienteValidator implements Validator {
 
-    PacienteService service;
+	PacienteService service;
 
-    public PacienteValidator(PacienteService service) {
-        this.service = service;
-    }
+	public PacienteValidator(PacienteService service) {
+		this.service = service;
+	}
 
-    @Override
-    public boolean supports(Class<?> clazz) {
+	@Override
+	public boolean supports(Class<?> clazz) {
 
-        return Paciente.class.equals(clazz);
+		return Paciente.class.equals(clazz);
 
-    }
+	}
 
-    @Override
-    public void validate(Object object, Errors errors) {
+	@Override
+	public void validate(Object object, Errors errors) {
 
-        Paciente entity = (Paciente) object;
+		Paciente entity = (Paciente) object;
 
-        if (entity.getId() != null) {
+		if (entity.getId() != null) {
 
-            if (1 != 0) {
+			if (1 != 0) {
 
-                errors.rejectValue("nome", "Existe.nome");
+				errors.rejectValue("nome", "Existe.nome");
 
-            }
+			}
 
-        }
+		}
 
-    }
+	}
 }

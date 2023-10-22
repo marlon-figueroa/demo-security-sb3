@@ -13,53 +13,52 @@ import jakarta.servlet.http.HttpSession;
 public class HomeController {
 
 	// abrir pagina home
-	@GetMapping({"/", "/home"})
+	@GetMapping({ "/", "/home" })
 	public String home(HttpServletResponse response) {
 		return "home";
-	}		
-
+	}
 
 	// abrir pagina login
-	@GetMapping({"/login"})
+	@GetMapping({ "/login" })
 	public String login() {
-		
+
 		return "login";
-	}	
-	
+	}
+
 	// login invalido
-	@GetMapping({"/login-error"})
+	@GetMapping({ "/login-error" })
 	public String loginError(ModelMap model, HttpServletRequest resp) {
 		HttpSession session = resp.getSession();
 		String lastException = String.valueOf(session.getAttribute("SPRING_SECURITY_LAST_EXCEPTION"));
 		if (lastException.contains(SessionAuthenticationException.class.getName())) {
-			model.addAttribute("alerta", "erro");
-			model.addAttribute("titulo", "Acesso recusado!");
-			model.addAttribute("texto", "Você já está logado em outro dispositivo.");
-			model.addAttribute("subtexto", "Faça o logout ou espere sua sessão expirar.");
+			model.addAttribute("alerta", "error");
+			model.addAttribute("titulo", "Acceso rechazado!");
+			model.addAttribute("texto", "Ya has iniciado sesión en otro dispositivo.");
+			model.addAttribute("subtexto", "Cierra sesión o espera a que caduque tu sesión.");
 			return "login";
 		}
-		model.addAttribute("alerta", "erro");
-		model.addAttribute("titulo", "Crendenciais inválidas!");
-		model.addAttribute("texto", "Login ou senha incorretos, tente novamente.");
-		model.addAttribute("subtexto", "Acesso permitido apenas para cadastros já ativados.");
+		model.addAttribute("alerta", "error");
+		model.addAttribute("titulo", "Crendenciales inválidas!");
+		model.addAttribute("texto", "Nombre de usuario o contraseña incorrectos, inténtelo de nuevo.");
+		model.addAttribute("subtexto", "Acceso permitido sólo para registros ya activados.");
 		return "login";
-	}	
-	
+	}
+
 	@GetMapping("/expired")
 	public String sessaoExpirada(ModelMap model) {
-		model.addAttribute("alerta", "erro");
-		model.addAttribute("titulo", "Acesso recusado!");
-		model.addAttribute("texto", "Sua sessão expirou.");
-		model.addAttribute("subtexto", "Você logou em outro dispositivo");
+		model.addAttribute("alerta", "error");
+		model.addAttribute("titulo", "Acceso rechazado!");
+		model.addAttribute("texto", "Su sesión ha caducado.");
+		model.addAttribute("subtexto", "Iniciaste sesión en otro dispositivo");
 		return "login";
-	}	
-	
+	}
+
 	// acesso negado
-	@GetMapping({"/acesso-negado"})
+	@GetMapping({ "/acesso-negado" })
 	public String acessoNegado(ModelMap model, HttpServletResponse resp) {
 		model.addAttribute("status", resp.getStatus());
-		model.addAttribute("error", "Acesso Negado");
-		model.addAttribute("message", "Você não tem permissão para acesso a esta área ou ação.");
+		model.addAttribute("error", "Acceso denegado");
+		model.addAttribute("message", "No tienes permiso para acceder a esta área o acción.");
 		return "error";
-	}	
+	}
 }

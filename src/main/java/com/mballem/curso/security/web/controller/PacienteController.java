@@ -17,7 +17,7 @@ import com.mballem.curso.security.service.UsuarioService;
 @Controller
 @RequestMapping("pacientes")
 public class PacienteController {
-	
+
 	@Autowired
 	private PacienteService service;
 	@Autowired
@@ -33,7 +33,7 @@ public class PacienteController {
 		model.addAttribute("paciente", paciente);
 		return "paciente/cadastro";
 	}
-	
+
 	// salvar o form de dados pessoais do paciente com verificacao de senha
 	@PostMapping("/salvar")
 	public String salvar(Paciente paciente, ModelMap model, @AuthenticationPrincipal User user) {
@@ -46,8 +46,8 @@ public class PacienteController {
 			model.addAttribute("falha", "Sua senha não confere, tente novamente.");
 		}
 		return "paciente/cadastro";
-	}	
-	
+	}
+
 	// editar o form de dados pessoais do paciente com verificacao de senha
 	@PostMapping("/editar")
 	public String editar(Paciente paciente, ModelMap model, @AuthenticationPrincipal User user) {
@@ -59,7 +59,6 @@ public class PacienteController {
 			model.addAttribute("falha", "Sua senha não confere, tente novamente.");
 		}
 		return "paciente/cadastro";
-	}	
-		
-	
+	}
+
 }

@@ -27,107 +27,88 @@ import com.mballem.curso.security.domain.PerfilTipo;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private static final String ADMIN = PerfilTipo.ADMIN.getDesc();
-    private static final String MEDICO = PerfilTipo.MEDICO.getDesc();
-    private static final String PACIENTE = PerfilTipo.PACIENTE.getDesc();
+	private static final String ADMIN = PerfilTipo.ADMIN.getDesc();
+	private static final String MEDICO = PerfilTipo.MEDICO.getDesc();
+	private static final String PACIENTE = PerfilTipo.PACIENTE.getDesc();
 
-    @Bean
-    SecurityFilterChain configure(HttpSecurity http) throws Exception {
+	@Bean
+	SecurityFilterChain configure(HttpSecurity http) throws Exception {
 
-        http.authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers(
-                        antMatcher("/webjars/**"),
-                        antMatcher("/css/**"),
-                        antMatcher("/image/**"),
-                        antMatcher("/js/**"),
-                        antMatcher("/"),
-                        antMatcher("/home"),
-                        antMatcher("/expired"),
-                        antMatcher("/u/novo/cadastro"),
-                        antMatcher("/u/cadastro/realizado"),
-                        antMatcher("/u/cadastro/paciente/salvar"),
-                        antMatcher("/u/confirmacao/cadastro"),
-                        antMatcher("/u/p/**")
-                ).permitAll()
-                .requestMatchers(
-                        antMatcher("/u/editar/senha"),
-                        antMatcher("/u/confirmar/senha")
-                ).hasAnyAuthority(PACIENTE, MEDICO)
-                .requestMatchers(
-                        antMatcher("/u/**")
-                ).hasAuthority(ADMIN)
-                .requestMatchers(
-                        antMatcher("/medicos/especialidade/titulo/*")
-                ).hasAnyAuthority(PACIENTE, MEDICO)
-                .requestMatchers(
-                        antMatcher("/medicos/dados"),
-                        antMatcher("/medicos/salvar"),
-                        antMatcher("/medicos/editar")
-                ).hasAnyAuthority(MEDICO, ADMIN)
-                .requestMatchers(
-                        antMatcher("/medicos/**")
-                ).hasAuthority(MEDICO)
-                .requestMatchers(
-                        antMatcher("/pacientes/**")
-                ).hasAuthority(PACIENTE)
-                .requestMatchers(
-                        antMatcher("/especialidades/datatables/server/medico/*")
-                ).hasAnyAuthority(MEDICO, ADMIN)
-                .requestMatchers(
-                        antMatcher("/especialidades/titulo")
-                ).hasAnyAuthority(MEDICO, ADMIN, PACIENTE)
-                .requestMatchers(
-                        antMatcher("/especialidades/**")
-                ).hasAuthority(ADMIN)
-                .anyRequest().authenticated()
-        ).formLogin((formLogin) -> formLogin
-                .loginPage("/login")
-                .defaultSuccessUrl("/", true)
-                .failureUrl("/login-error")
-                .permitAll()
-        ).logout((logout) -> logout
-                .logoutSuccessUrl("/")
-                .deleteCookies("JSESSIONID")
-        ).exceptionHandling((ex) -> ex
-                .accessDeniedPage("/acesso-negado")
-        ).rememberMe(
-                withDefaults()
-        ).sessionManagement((session) -> session
-                .maximumSessions(1)
-                .expiredUrl("/expired")
-                .maxSessionsPreventsLogin(false)
-                .sessionRegistry(sessionRegistry())
-        ).sessionManagement((session) -> session
-                .sessionFixation()
-                .newSession()
-                .sessionAuthenticationStrategy(sessionAuthStrategy())
-        );
+		http.authorizeHttpRequests((authorize) -> authorize
+				.requestMatchers(
+						antMatcher("/webjars/**"), 
+						antMatcher("/css/**"), 
+						antMatcher("/image/**"),
+						antMatcher("/js/**"), 
+						antMatcher("/"), 
+						antMatcher("/home"), 
+						antMatcher("/expired"),
+						antMatcher("/u/novo/cadastro"), 
+						antMatcher("/u/cadastro/realizado"),
+						antMatcher("/u/cadastro/paciente/salvar"), 
+						antMatcher("/u/confirmacao/cadastro"),
+						antMatcher("/u/p/**"))
+				.permitAll()
+				.requestMatchers(
+						antMatcher("/u/editar/senha"), 
+						antMatcher("/u/confirmar/senha"))
+				.	hasAnyAuthority(PACIENTE, MEDICO)
+				.requestMatchers(antMatcher("/u/**"))
+					.hasAuthority(ADMIN)
+				.requestMatchers(antMatcher("/medicos/especialidade/titulo/*"))
+					.hasAnyAuthority(PACIENTE, MEDICO)
+				.requestMatchers(
+						antMatcher("/medicos/dados"), 
+						antMatcher("/medicos/salvar"),
+						antMatcher("/medicos/editar"))
+				.hasAnyAuthority(MEDICO, ADMIN)
+				.requestMatchers(antMatcher("/medicos/**")).hasAuthority(MEDICO)
+				.requestMatchers(antMatcher("/pacientes/**")).hasAuthority(PACIENTE)
+				.requestMatchers(antMatcher("/especialidades/datatables/server/medico/*"))
+				.hasAnyAuthority(MEDICO, ADMIN)
+					.requestMatchers(antMatcher("/especialidades/titulo"))
+				.hasAnyAuthority(MEDICO, ADMIN, PACIENTE)
+					.requestMatchers(antMatcher("/especialidades/**"))
+				.hasAuthority(ADMIN).anyRequest().authenticated())
+				.formLogin((formLogin) -> formLogin.loginPage("/login")
+						.defaultSuccessUrl("/", true)
+						.failureUrl("/login-error")
+						.permitAll())
+				.logout((logout) -> logout.logoutSuccessUrl("/").deleteCookies("JSESSIONID"))
+				.exceptionHandling((ex) -> ex.accessDeniedPage("/acesso-negado"))
+						.rememberMe(withDefaults())
+				.sessionManagement((session) -> session.maximumSessions(1).expiredUrl("/expired")
+						.maxSessionsPreventsLogin(false)
+						.sessionRegistry(sessionRegistry()))
+				.sessionManagement(
+						(session) -> session.sessionFixation().newSession()
+						.sessionAuthenticationStrategy(sessionAuthStrategy()));
+		
+		return http.build();
+	}
 
-        return http.build();
-    }
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+		return authenticationConfiguration.getAuthenticationManager();
+	}
 
-    @Bean
-    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
+	@Bean
+	SessionAuthenticationStrategy sessionAuthStrategy() {
+		return new RegisterSessionAuthenticationStrategy(sessionRegistry());
+	}
 
-    @Bean
-    SessionAuthenticationStrategy sessionAuthStrategy() {
-        return new RegisterSessionAuthenticationStrategy(sessionRegistry());
-    }
+	@Bean
+	SessionRegistry sessionRegistry() {
+		return new SessionRegistryImpl();
+	}
 
-    @Bean
-    SessionRegistry sessionRegistry() {
-        return new SessionRegistryImpl();
-    }
-
-    @Bean
-    ServletListenerRegistrationBean<?> servletListenerRegistrationBean() {
-        return new ServletListenerRegistrationBean<>(new HttpSessionEventPublisher());
-    }
+	@Bean
+	ServletListenerRegistrationBean<?> servletListenerRegistrationBean() {
+		return new ServletListenerRegistrationBean<>(new HttpSessionEventPublisher());
+	}
 }

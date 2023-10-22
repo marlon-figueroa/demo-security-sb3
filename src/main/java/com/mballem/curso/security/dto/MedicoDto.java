@@ -8,42 +8,42 @@ import java.time.LocalDate;
  */
 @SuppressWarnings("serial")
 public class MedicoDto implements Serializable {
-    
-    private String nome;
-    private String crm;
-    private LocalDate dtInscricao;
-    private String[] especialidades;
 
-    public String getNome() {
-        return nome;
-    }
+	private String nome;
+	private String crm;
+	private LocalDate dtInscricao;
+	private String[] especialidades;
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public String getCrm() {
-        return crm;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public void setCrm(String crm) {
-        this.crm = crm;
-    }
+	public String getCrm() {
+		return crm;
+	}
 
-    public LocalDate getDtInscricao() {
-        return dtInscricao;
-    }
+	public void setCrm(String crm) {
+		this.crm = crm;
+	}
 
-    public void setDtInscricao(LocalDate dtInscricao) {
-        this.dtInscricao = dtInscricao;
-    }
+	public LocalDate getDtInscricao() {
+		return dtInscricao;
+	}
 
-    public String[] getEspecialidades() {
-        return especialidades;
-    }
+	public void setDtInscricao(LocalDate dtInscricao) {
+		this.dtInscricao = dtInscricao;
+	}
 
-    public void setEspecialidades(String[] especialidades) {
-        this.especialidades = especialidades;
-    }
+	public String[] getEspecialidades() {
+		return especialidades;
+	}
+
+	public void setEspecialidades(String[] especialidades) {
+		this.especialidades = especialidades;
+	}
 
 }

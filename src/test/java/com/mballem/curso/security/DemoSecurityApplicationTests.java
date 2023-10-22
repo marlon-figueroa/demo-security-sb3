@@ -8,9 +8,7 @@ class DemoSecurityApplicationTests {
 
 	@Test
 	void contextLoads() {
-		
+
 	}
 
 }
-
-

@@ -8,10 +8,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "perfis")
 public class Perfil extends AbstractEntity {
-	
+
 	@Column(name = "descricao", nullable = false, unique = true)
 	private String desc;
-	
+
 	public Perfil() {
 		super();
 	}

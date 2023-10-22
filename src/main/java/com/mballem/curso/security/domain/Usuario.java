@@ -15,30 +15,28 @@ import jakarta.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "usuarios", indexes = {@Index(name = "idx_usuario_email", columnList = "email")})
-public class Usuario extends AbstractEntity {	
-	
+@Table(name = "usuarios", indexes = { @Index(name = "idx_usuario_email", columnList = "email") })
+public class Usuario extends AbstractEntity {
+
 	@Column(name = "email", unique = true, nullable = false)
 	private String email;
-	
+
 	@JsonIgnore
 	@Column(name = "senha", nullable = false)
 	private String senha;
-	
+
 	@ManyToMany
-	@JoinTable(
-		name = "usuarios_tem_perfis", 
-        joinColumns = { @JoinColumn(name = "usuario_id", referencedColumnName = "id") }, 
-        inverseJoinColumns = { @JoinColumn(name = "perfil_id", referencedColumnName = "id") }
-	)
+	@JoinTable(name = "usuarios_tem_perfis", joinColumns = {
+			@JoinColumn(name = "usuario_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "perfil_id", referencedColumnName = "id") })
 	private List<Perfil> perfis;
-	
+
 	@Column(name = "ativo", nullable = false, columnDefinition = "TINYINT(1)")
 	private boolean ativo;
-	
+
 	@Column(name = "codigo_verificador", length = 6)
 	private String codigoVerificador;
-	
+
 	public Usuario() {
 		super();
 	}
@@ -58,7 +56,7 @@ public class Usuario extends AbstractEntity {
 	public Usuario(String email) {
 		this.email = email;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
@@ -89,8 +87,8 @@ public class Usuario extends AbstractEntity {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
-	}	
-	
+	}
+
 	public String getCodigoVerificador() {
 		return codigoVerificador;
 	}

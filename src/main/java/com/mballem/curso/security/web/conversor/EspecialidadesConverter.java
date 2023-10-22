@@ -18,10 +18,10 @@ public class EspecialidadesConverter implements Converter<String[], Set<Especial
 
 	@Override
 	public Set<Especialidade> convert(String[] titulos) {
-		
+
 		Set<Especialidade> especialidades = new HashSet<>();
 		if (titulos != null && titulos.length > 0) {
-			especialidades.addAll(service.buscarPorTitulos(titulos));			
+			especialidades.addAll(service.buscarPorTitulos(titulos));
 		}
 		return especialidades;
 	}

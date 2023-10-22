@@ -13,22 +13,22 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Component
 public class Datatables {
-	
+
 	private HttpServletRequest request;
-	private String[] colunas;	
+	private String[] colunas;
 
 	public Datatables() {
 		super();
 	}
-	
-	public Map<String, Object> getResponse(Page<?> page) {		
+
+	public Map<String, Object> getResponse(Page<?> page) {
 		Map<String, Object> json = new LinkedHashMap<>();
 		json.put("draw", draw());
 		json.put("recordsTotal", page.getTotalElements());
 		json.put("recordsFiltered", page.getTotalElements());
 		json.put("data", page.getContent());
 		return json;
-	}	
+	}
 
 	public HttpServletRequest getRequest() {
 		return request;
@@ -49,11 +49,11 @@ public class Datatables {
 	private int draw() {
 		return Integer.parseInt(this.request.getParameter("draw"));
 	}
-	
+
 	private int start() {
 		return Integer.parseInt(this.request.getParameter("start"));
 	}
-	
+
 	public int getLength() {
 		return Integer.parseInt(this.request.getParameter("length"));
 	}
@@ -65,7 +65,7 @@ public class Datatables {
 	public String getColumnName() {
 		int iCol = Integer.parseInt(this.request.getParameter("order[0][column]"));
 		return this.colunas[iCol];
-	}	
+	}
 
 	public Sort.Direction getDirection() {
 		String order = this.request.getParameter("order[0][dir]");
@@ -76,10 +76,10 @@ public class Datatables {
 		return sort;
 	}
 
-	public String getSearch() {		
+	public String getSearch() {
 		return this.request.getParameter("search[value]");
 	}
-	
+
 	public Pageable getPageable() {
 		return PageRequest.of(getCurrentPage(), getLength(), getDirection(), getColumnName());
 	}

@@ -31,101 +31,98 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("agendamentos")
 public class AgendamentoController {
-	
+
 	@Autowired
 	private AgendamentoService service;
 	@Autowired
 	private PacienteService pacienteService;
 	@Autowired
-	private EspecialidadeService especialidadeService;	
+	private EspecialidadeService especialidadeService;
 
-	// abre a pagina de agendamento de consultas 
+	// abre a pagina de agendamento de consultas
 	@PreAuthorize("hasAnyAuthority('PACIENTE', 'MEDICO')")
-	@GetMapping({"/agendar"})
+	@GetMapping({ "/agendar" })
 	public String agendarConsulta(Agendamento agendamento) {
 
-		return "agendamento/cadastro";		
+		return "agendamento/cadastro";
 	}
-	
+
 	// busca os horarios livres, ou seja, sem agendamento
 	@PreAuthorize("hasAnyAuthority('PACIENTE', 'MEDICO')")
 	@GetMapping("/horario/medico/{id}/data/{data}")
 	public ResponseEntity<?> getHorarios(@PathVariable("id") Long id,
-						@PathVariable("data") @DateTimeFormat(iso = ISO.DATE) LocalDate data) {
+			@PathVariable("data") @DateTimeFormat(iso = ISO.DATE) LocalDate data) {
 
 		return ResponseEntity.ok(service.buscarHorariosNaoAgendadosPorMedicoIdEData(id, data));
 	}
-	
+
 	// salvar um consulta agendada
 	@PreAuthorize("hasAuthority('PACIENTE')")
-	@PostMapping({"/salvar"})
+	@PostMapping({ "/salvar" })
 	public String salvar(@AuthenticationPrincipal User user, RedirectAttributes attr, Agendamento agendamento) {
 		Paciente paciente = pacienteService.buscarPorUsuarioEmail(user.getUsername());
 		String titulo = agendamento.getEspecialidade().getTitulo();
-		Especialidade especialidade = especialidadeService
-				.buscarPorTitulos(new String[] {titulo})
-				.stream().findFirst().get();
+		Especialidade especialidade = especialidadeService.buscarPorTitulos(new String[] { titulo }).stream()
+				.findFirst().get();
 		agendamento.setEspecialidade(especialidade);
 		agendamento.setPaciente(paciente);
 		service.salvar(agendamento);
 		attr.addFlashAttribute("sucesso", "Sua consulta foi agendada com sucesso.");
-		return "redirect:/agendamentos/agendar";		
+		return "redirect:/agendamentos/agendar";
 	}
-	
+
 	// abrir pagina de historico de agendamento do paciente
 	@PreAuthorize("hasAnyAuthority('PACIENTE', 'MEDICO')")
-	@GetMapping({"/historico/paciente", "/historico/consultas"})
+	@GetMapping({ "/historico/paciente", "/historico/consultas" })
 	public String historico() {
 
 		return "agendamento/historico-paciente";
 	}
-	
+
 	// localizar o historico de agendamentos por usuario logado
 	@PreAuthorize("hasAnyAuthority('PACIENTE', 'MEDICO')")
 	@GetMapping("/datatables/server/historico")
-	public ResponseEntity<?> historicoAgendamentosPorPaciente(HttpServletRequest request, 
-															  @AuthenticationPrincipal User user) {
-		
+	public ResponseEntity<?> historicoAgendamentosPorPaciente(HttpServletRequest request,
+			@AuthenticationPrincipal User user) {
+
 		if (user.getAuthorities().contains(new SimpleGrantedAuthority(PerfilTipo.PACIENTE.getDesc()))) {
-			
+
 			return ResponseEntity.ok(service.buscarHistoricoPorPacienteEmail(user.getUsername(), request));
 		}
-		
+
 		if (user.getAuthorities().contains(new SimpleGrantedAuthority(PerfilTipo.MEDICO.getDesc()))) {
-			
+
 			return ResponseEntity.ok(service.buscarHistoricoPorMedicoEmail(user.getUsername(), request));
-		}		
-		
+		}
+
 		return ResponseEntity.notFound().build();
 	}
-	
+
 	// localizar agendamento pelo id e envia-lo para a pagina de cadastro
 	@PreAuthorize("hasAnyAuthority('PACIENTE', 'MEDICO')")
-	@GetMapping("/editar/consulta/{id}") 
-	public String preEditarConsultaPaciente(@PathVariable("id") Long id, 
-										    ModelMap model, @AuthenticationPrincipal User user) {
-		
+	@GetMapping("/editar/consulta/{id}")
+	public String preEditarConsultaPaciente(@PathVariable("id") Long id, ModelMap model,
+			@AuthenticationPrincipal User user) {
+
 		Agendamento agendamento = service.buscarPorIdEUsuario(id, user.getUsername());
-		
+
 		model.addAttribute("agendamento", agendamento);
 		return "agendamento/cadastro";
 	}
-	
+
 	@PreAuthorize("hasAnyAuthority('PACIENTE', 'MEDICO')")
 	@PostMapping("/editar")
-	public String editarConsulta(Agendamento agendamento, 
-						         RedirectAttributes attr, @AuthenticationPrincipal User user) {
+	public String editarConsulta(Agendamento agendamento, RedirectAttributes attr, @AuthenticationPrincipal User user) {
 		String titulo = agendamento.getEspecialidade().getTitulo();
-		Especialidade especialidade = especialidadeService
-				.buscarPorTitulos(new String[] {titulo})
-				.stream().findFirst().get();
+		Especialidade especialidade = especialidadeService.buscarPorTitulos(new String[] { titulo }).stream()
+				.findFirst().get();
 		agendamento.setEspecialidade(especialidade);
-		
+
 		service.editar(agendamento, user.getUsername());
 		attr.addFlashAttribute("sucesso", "Sua consulta froi alterada com sucesso.");
 		return "redirect:/agendamentos/agendar";
 	}
-	
+
 	@PreAuthorize("hasAuthority('PACIENTE')")
 	@GetMapping("/excluir/consulta/{id}")
 	public String excluirConsulta(@PathVariable("id") Long id, RedirectAttributes attr) {

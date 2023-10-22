@@ -36,24 +36,22 @@ public class UsuarioService implements UserDetailsService {
 	private Datatables datatables;
 	@Autowired
 	private EmailService emailService;
-	
+
 	@Transactional(readOnly = true)
 	public Usuario buscarPorEmail(String email) {
-		
+
 		return repository.findByEmail(email);
 	}
 
-	@Override @Transactional(readOnly = true)
+	@Override
+	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Usuario usuario = buscarPorEmailEAtivo(username)
 				.orElseThrow(() -> new UsernameNotFoundException("Usuario " + username + " não encontrado."));
-		return new User(
-			usuario.getEmail(),
-			usuario.getSenha(),
-			AuthorityUtils.createAuthorityList(getAtuthorities(usuario.getPerfis()))
-		);
+		return new User(usuario.getEmail(), usuario.getSenha(),
+				AuthorityUtils.createAuthorityList(getAtuthorities(usuario.getPerfis())));
 	}
-	
+
 	private String[] getAtuthorities(List<Perfil> perfis) {
 		String[] authorities = new String[perfis.size()];
 		for (int i = 0; i < perfis.size(); i++) {
@@ -61,13 +59,12 @@ public class UsuarioService implements UserDetailsService {
 		}
 		return authorities;
 	}
-	
+
 	@Transactional(readOnly = true)
 	public Map<String, Object> buscarTodos(HttpServletRequest request) {
 		datatables.setRequest(request);
 		datatables.setColunas(DatatablesColunas.USUARIOS);
-		Page<Usuario> page = datatables.getSearch().isEmpty()
-				? repository.findAll(datatables.getPageable())
+		Page<Usuario> page = datatables.getSearch().isEmpty() ? repository.findAll(datatables.getPageable())
 				: repository.findByEmailOrPerfil(datatables.getSearch(), datatables.getPageable());
 		return datatables.getResponse(page);
 	}
@@ -77,31 +74,31 @@ public class UsuarioService implements UserDetailsService {
 		String crypt = new BCryptPasswordEncoder().encode(usuario.getSenha());
 		usuario.setSenha(crypt);
 
-		repository.save(usuario); 	 	
+		repository.save(usuario);
 	}
 
 	@Transactional(readOnly = true)
 	public Usuario buscarPorId(Long id) {
-		
+
 		return repository.findById(id).get();
 	}
 
 	@Transactional(readOnly = true)
 	public Usuario buscarPorIdEPerfis(Long usuarioId, Long[] perfisId) {
-		
+
 		return repository.findByIdAndPerfis(usuarioId, perfisId)
 				.orElseThrow(() -> new UsernameNotFoundException("Usuário inexistente!"));
 	}
 
 	public static boolean isSenhaCorreta(String senhaDigitada, String senhaArmazenada) {
-		
+
 		return new BCryptPasswordEncoder().matches(senhaDigitada, senhaArmazenada);
 	}
 
 	@Transactional(readOnly = false)
 	public void alterarSenha(Usuario usuario, String senha) {
 		usuario.setSenha(new BCryptPasswordEncoder().encode(senha));
-		repository.save(usuario);		
+		repository.save(usuario);
 	}
 
 	@Transactional(readOnly = false)
@@ -109,29 +106,29 @@ public class UsuarioService implements UserDetailsService {
 		String crypt = new BCryptPasswordEncoder().encode(usuario.getSenha());
 		usuario.setSenha(crypt);
 		usuario.addPerfil(PerfilTipo.PACIENTE);
-		repository.save(usuario);	
-		
+		repository.save(usuario);
+
 		emailDeConfirmacaoDeCadastro(usuario.getEmail());
 	}
-	
+
 	@Transactional(readOnly = true)
 	public Optional<Usuario> buscarPorEmailEAtivo(String email) {
-		
+
 		return repository.findByEmailAndAtivo(email);
 	}
-	
+
 	public void emailDeConfirmacaoDeCadastro(String email) throws MessagingException {
 		String codigo = java.util.Base64.getEncoder().encodeToString(email.getBytes());
 		emailService.enviarPedidoDeConfirmacaoDeCadastro(email, codigo);
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void ativarCadastroPaciente(String codigo) {
 		String email = new String(java.util.Base64.getDecoder().decode(codigo));
 		Usuario usuario = buscarPorEmail(email);
 		if (usuario.hasNotId()) {
-			throw new AcessoNegadoException("Não foi possível ativar seu cadastro. Entre em "
-					+ "contato com o suporte.");
+			throw new AcessoNegadoException(
+					"Não foi possível ativar seu cadastro. Entre em " + "contato com o suporte.");
 		}
 		usuario.setAtivo(true);
 	}
@@ -139,12 +136,13 @@ public class UsuarioService implements UserDetailsService {
 	@Transactional(readOnly = false)
 	public void pedidoRedefinicaoDeSenha(String email) throws MessagingException {
 		Usuario usuario = buscarPorEmailEAtivo(email)
-				.orElseThrow(() -> new UsernameNotFoundException("Usuario " + email + " não encontrado."));;
-		
+				.orElseThrow(() -> new UsernameNotFoundException("Usuario " + email + " não encontrado."));
+		;
+
 		String verificador = RandomStringUtils.randomAlphanumeric(6);
-		
+
 		usuario.setCodigoVerificador(verificador);
-		
+
 		emailService.enviarPedidoRedefinicaoSenha(email, verificador);
 	}
 }

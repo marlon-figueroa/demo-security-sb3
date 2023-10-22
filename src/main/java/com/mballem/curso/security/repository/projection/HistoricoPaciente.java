@@ -7,12 +7,12 @@ import com.mballem.curso.security.domain.Paciente;
 public interface HistoricoPaciente {
 
 	Long getId();
-	
+
 	Paciente getPaciente();
-	
+
 	String getDataConsulta();
-	
+
 	Medico getMedico();
-	
+
 	Especialidade getEspecialidade();
 }
