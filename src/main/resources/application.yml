@@ -1,4 +1,15 @@
+##
+##  @Note: Propiedades principales de la aplicacion
+##
+
+# Variables del servidor Tomcat Embedded
+server:
+  port: ${PORT:8081}
+  servlet:
+    context-path: /demo
 spring:
+  application:
+    name: demo
   datasource:
     url: jdbc:mysql://localhost:3306/clinica_security?useTimezone=true&serverTimezone=America/El_Salvador&useSSL=false&allowPublicKeyRetrieval=true
     username: root

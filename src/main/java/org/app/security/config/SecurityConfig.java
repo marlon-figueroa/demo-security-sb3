@@ -51,24 +51,26 @@ public class SecurityConfig {
 				.requestMatchers(
 						antMatcher("/u/editar/senha"), 
 						antMatcher("/u/confirmar/senha"))
-				.	hasAnyAuthority(PACIENTE, MEDICO)
+				.hasAnyAuthority(PACIENTE, MEDICO)
 				.requestMatchers(antMatcher("/u/**"))
 					.hasAuthority(ADMIN)
 				.requestMatchers(antMatcher("/medicos/especialidade/titulo/*"))
 					.hasAnyAuthority(PACIENTE, MEDICO)
 				.requestMatchers(
-						antMatcher("/medicos/dados"), 
-						antMatcher("/medicos/salvar"),
-						antMatcher("/medicos/editar"))
-				.hasAnyAuthority(MEDICO, ADMIN)
-				.requestMatchers(antMatcher("/medicos/**")).hasAuthority(MEDICO)
-				.requestMatchers(antMatcher("/pacientes/**")).hasAuthority(PACIENTE)
+					antMatcher("/medicos/dados"), 
+					antMatcher("/medicos/salvar"),
+					antMatcher("/medicos/editar"))
+						.hasAnyAuthority(MEDICO, ADMIN)
+				.requestMatchers(antMatcher("/medicos/**"))
+						.hasAuthority(MEDICO)
+				.requestMatchers(antMatcher("/pacientes/**"))
+						.hasAuthority(PACIENTE)
 				.requestMatchers(antMatcher("/especialidades/datatables/server/medico/*"))
-				.hasAnyAuthority(MEDICO, ADMIN)
-					.requestMatchers(antMatcher("/especialidades/titulo"))
-				.hasAnyAuthority(MEDICO, ADMIN, PACIENTE)
-					.requestMatchers(antMatcher("/especialidades/**"))
-				.hasAuthority(ADMIN).anyRequest().authenticated())
+						.hasAnyAuthority(MEDICO, ADMIN)
+				.requestMatchers(antMatcher("/especialidades/titulo"))
+						.hasAnyAuthority(MEDICO, ADMIN, PACIENTE)
+				.requestMatchers(antMatcher("/especialidades/**"))
+						.hasAuthority(ADMIN).anyRequest().authenticated())
 				.formLogin((formLogin) -> formLogin.loginPage("/login")
 						.defaultSuccessUrl("/", true)
 						.failureUrl("/login-error")

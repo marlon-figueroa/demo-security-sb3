@@ -27,8 +27,10 @@ public class Usuario extends AbstractEntity {
 
 	@ManyToMany
 	@JoinTable(name = "usuarios_tem_perfis", joinColumns = {
-			@JoinColumn(name = "usuario_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "perfil_id", referencedColumnName = "id") })
+			@JoinColumn(name = "usuario_id", referencedColumnName = "id") 
+	}, inverseJoinColumns = {
+			@JoinColumn(name = "perfil_id", referencedColumnName = "id") 
+	})
 	private List<Perfil> perfis;
 
 	@Column(name = "ativo", nullable = false, columnDefinition = "TINYINT(1)")
@@ -45,7 +47,7 @@ public class Usuario extends AbstractEntity {
 		super.setId(id);
 	}
 
-	// adiciona perfis a lista
+	// adiciona perfil a lista
 	public void addPerfil(PerfilTipo tipo) {
 		if (this.perfis == null) {
 			this.perfis = new ArrayList<>();

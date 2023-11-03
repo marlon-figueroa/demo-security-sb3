@@ -62,6 +62,6 @@ public abstract class AbstractEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return String.format("Entidade %s id: %s", this.getClass().getName(), getId());
+		return String.format("Entidades %s id: %s", this.getClass().getName(), getId());
 	}
 }
