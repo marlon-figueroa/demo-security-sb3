@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.app.security.datatables.Datatables;
-import org.app.security.datatables.DatatablesColunas;
+import org.app.security.datatables.DatatablesColumnas;
 import org.app.security.domain.Especialidade;
 import org.app.security.repository.EspecialidadeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class EspecialidadeService {
 	@Transactional(readOnly = true)
 	public Map<String, Object> buscarEspecialidades(HttpServletRequest request) {
 		datatables.setRequest(request);
-		datatables.setColunas(DatatablesColunas.ESPECIALIDADES);
+		datatables.setColunas(DatatablesColumnas.ESPECIALIDADES);
 		Page<?> page = datatables.getSearch().isEmpty() ? repository.findAll(datatables.getPageable())
 				: repository.findAllByTitulo(datatables.getSearch(), datatables.getPageable());
 		return datatables.getResponse(page);
@@ -65,7 +65,7 @@ public class EspecialidadeService {
 	@Transactional(readOnly = true)
 	public Map<String, Object> buscarEspecialidadesPorMedico(Long id, HttpServletRequest request) {
 		datatables.setRequest(request);
-		datatables.setColunas(DatatablesColunas.ESPECIALIDADES);
+		datatables.setColunas(DatatablesColumnas.ESPECIALIDADES);
 		Page<Especialidade> page = repository.findByIdMedico(id, datatables.getPageable());
 		return datatables.getResponse(page);
 	}

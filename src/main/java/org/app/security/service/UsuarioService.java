@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.app.security.datatables.Datatables;
-import org.app.security.datatables.DatatablesColunas;
+import org.app.security.datatables.DatatablesColumnas;
 import org.app.security.domain.Perfil;
 import org.app.security.domain.PerfilTipo;
 import org.app.security.domain.Usuario;
@@ -64,7 +64,7 @@ public class UsuarioService implements UserDetailsService {
 	@Transactional(readOnly = true)
 	public Map<String, Object> buscarTodos(HttpServletRequest request) {
 		datatables.setRequest(request);
-		datatables.setColunas(DatatablesColunas.USUARIOS);
+		datatables.setColunas(DatatablesColumnas.USUARIOS);
 		Page<Usuario> page = datatables.getSearch().isEmpty() ? 
 				repository.findAll(datatables.getPageable()) : 
 				repository.findByEmailOrPerfil(datatables.getSearch(), datatables.getPageable());

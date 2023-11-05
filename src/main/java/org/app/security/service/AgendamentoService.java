@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.app.security.datatables.Datatables;
-import org.app.security.datatables.DatatablesColunas;
+import org.app.security.datatables.DatatablesColumnas;
 import org.app.security.domain.Agendamento;
 import org.app.security.domain.Horario;
 import org.app.security.exception.AcessoNegadoException;
@@ -41,7 +41,7 @@ public class AgendamentoService {
 	@Transactional(readOnly = true)
 	public Map<String, Object> buscarHistoricoPorPacienteEmail(String email, HttpServletRequest request) {
 		datatables.setRequest(request);
-		datatables.setColunas(DatatablesColunas.AGENDAMENTOS);
+		datatables.setColunas(DatatablesColumnas.AGENDAMENTOS);
 		Page<HistoricoPaciente> page = repository.findHistoricoByPacienteEmail(email, datatables.getPageable());
 		return datatables.getResponse(page);
 	}
@@ -49,7 +49,7 @@ public class AgendamentoService {
 	@Transactional(readOnly = true)
 	public Map<String, Object> buscarHistoricoPorMedicoEmail(String email, HttpServletRequest request) {
 		datatables.setRequest(request);
-		datatables.setColunas(DatatablesColunas.AGENDAMENTOS);
+		datatables.setColunas(DatatablesColumnas.AGENDAMENTOS);
 		Page<HistoricoPaciente> page = repository.findHistoricoByMedicoEmail(email, datatables.getPageable());
 		return datatables.getResponse(page);
 	}

@@ -1,6 +1,6 @@
 package org.app.security.datatables;
 
-public class DatatablesColunas {
+public class DatatablesColumnas {
 
 	public static final String[] ESPECIALIDADES = { 
 			"id", 

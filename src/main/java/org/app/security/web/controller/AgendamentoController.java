@@ -38,7 +38,7 @@ public class AgendamentoController {
 	@Autowired
 	private EspecialidadeService especialidadeService;
 
-	// abre a pagina de agendamento de consultas
+	// abre a pagina de programacion de consultas
 	@PreAuthorize("hasAnyAuthority('PACIENTE', 'MEDICO')")
 	@GetMapping({ "/agendar" })
 	public String agendarConsulta(Agendamento agendamento) {
@@ -46,7 +46,7 @@ public class AgendamentoController {
 		return "agendamento/cadastro";
 	}
 
-	// busca os horarios livres, ou seja, sem agendamento
+	// busca los horarios libres, ou seja, sem programacion
 	@PreAuthorize("hasAnyAuthority('PACIENTE', 'MEDICO')")
 	@GetMapping("/horario/medico/{id}/data/{data}")
 	public ResponseEntity<?> getHorarios(@PathVariable("id") Long id,
@@ -97,7 +97,7 @@ public class AgendamentoController {
 		return ResponseEntity.notFound().build();
 	}
 
-	// localizar agendamento pelo id e envia-lo para a pagina de cadastro
+	// localizar programacion pelo id e envia-lo para a pagina de cadastro
 	@PreAuthorize("hasAnyAuthority('PACIENTE', 'MEDICO')")
 	@GetMapping("/editar/consulta/{id}")
 	public String preEditarConsultaPaciente(@PathVariable("id") Long id, ModelMap model,
