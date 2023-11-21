@@ -33,7 +33,8 @@ public class EspecialidadeService {
 	public Map<String, Object> buscarEspecialidades(HttpServletRequest request) {
 		datatables.setRequest(request);
 		datatables.setColunas(DatatablesColumnas.ESPECIALIDADES);
-		Page<?> page = datatables.getSearch().isEmpty() ? repository.findAll(datatables.getPageable())
+		Page<?> page = datatables.getSearch().isEmpty()
+				? repository.findAll(datatables.getPageable())
 				: repository.findAllByTitulo(datatables.getSearch(), datatables.getPageable());
 		return datatables.getResponse(page);
 	}
@@ -51,7 +52,7 @@ public class EspecialidadeService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<String> buscarEspecialidadeByTermo(String termo) {
+	public List<String> buscarEspecialidadByTermo(String termo) {
 
 		return repository.findEspecialidadesByTermo(termo);
 	}

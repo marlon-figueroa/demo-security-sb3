@@ -8,7 +8,7 @@ import org.app.security.datatables.Datatables;
 import org.app.security.datatables.DatatablesColumnas;
 import org.app.security.domain.Agendamento;
 import org.app.security.domain.Horario;
-import org.app.security.exception.AcessoNegadoException;
+import org.app.security.exception.AccesoNegadoException;
 import org.app.security.repository.AgendamentoRepository;
 import org.app.security.repository.projection.HistoricoPaciente;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +74,7 @@ public class AgendamentoService {
 	public Agendamento buscarPorIdEUsuario(Long id, String email) {
 
 		return repository.findByIdAndPacienteOrMedicoEmail(id, email)
-				.orElseThrow(() -> new AcessoNegadoException("Acesso negado ao usuário: " + email));
+				.orElseThrow(() -> new AccesoNegadoException("Acesso negado ao usuário: " + email));
 	}
 
 	@Transactional(readOnly = false)
