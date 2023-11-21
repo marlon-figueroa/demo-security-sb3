@@ -1,6 +1,6 @@
 package org.app.security.web.exception;
 
-import org.app.security.exception.AcessoNegadoException;
+import org.app.security.exception.AccesoNegadoException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,8 +18,8 @@ public class ExceptionController {
 		return model;
 	}
 
-	@ExceptionHandler(AcessoNegadoException.class)
-	public ModelAndView acessoNegadoException(AcessoNegadoException ex) {
+	@ExceptionHandler(AccesoNegadoException.class)
+	public ModelAndView acessoNegadoException(AccesoNegadoException ex) {
 		ModelAndView model = new ModelAndView("error");
 		model.addObject("status", 403);
 		model.addObject("error", "Operação não pode ser realizada.");

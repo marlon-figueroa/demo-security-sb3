@@ -10,7 +10,7 @@ import org.app.security.datatables.DatatablesColumnas;
 import org.app.security.domain.Perfil;
 import org.app.security.domain.PerfilTipo;
 import org.app.security.domain.Usuario;
-import org.app.security.exception.AcessoNegadoException;
+import org.app.security.exception.AccesoNegadoException;
 import org.app.security.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -122,7 +122,7 @@ public class UsuarioService implements UserDetailsService {
 		String email = new String(java.util.Base64.getDecoder().decode(codigo));
 		Usuario usuario = buscarPorEmail(email);
 		if (usuario.hasNotId()) {
-			throw new AcessoNegadoException("No fue posible activar si registro. Ingrese en " + "contacto con soporte.");
+			throw new AccesoNegadoException("No fue posible activar si registro. Ingrese en " + "contacto con soporte.");
 		}
 		usuario.setAtivo(true);
 	}

@@ -36,11 +36,11 @@
 							  th:object="${medico}"	method="POST" class="was-validated">
 							<div class="form-row">
 								<div class="form-group col-md-6">
-									<label for="nome" class="form-group">Nome Completo</label>
+									<label for="nome" class="form-group">Nombre Completo</label>
 									<input type="text" class="form-control"
 										th:field="*{nome}" id="nome" placeholder="João da Silva"
 										required/>
-									<div class="invalid-feedback">Nome completo é requerido.</div>
+									<div class="invalid-feedback">Nombre completo es requerido.</div>
 								</div>
 							</div>
 							<div class="form-row">
@@ -48,24 +48,22 @@
 									<label for="crm">Inscrição CRM</label> 
 									<input type="text" class="form-control" id="crm" placeholder="000000"
 										th:field="*{crm}" required />
-									<div class="invalid-feedback">CRM é requerido.</div>
+									<div class="invalid-feedback">CRM es requerido.</div>
 								</div>
 								<div class="form-group col-md-6">
-									<label for="dtInscricao">Data da Inscrição</label> 
+									<label for="dtInscricao">Datos de Inscrici&oacute;n</label>
 									<input
 										type="date" class="form-control" id="dtInscricao"
 										th:field="*{dtInscricao}" required />
-									<div class="invalid-feedback">Data de Inscrição CRM é requerida.</div>	
+									<div class="invalid-feedback">Datos de Inscrici&oacute;n CRM de requerida.</div>
 								</div>
 							</div>							
 
 							<div id="especialidades-selecionadas">
 								<div class="form-group">
 									<label for="autocomplete-especialidades">Especialidade(s)</label>
-									<input type="text" id="autocomplete-especialidades"
-										class="form-control" placeholder="suas especialidade são..." /> 
-									<small class="form-text text-muted">Insira suas
-										especialidades médicas.</small>
+									<input type="text" id="autocomplete-especialidades" class="form-control" placeholder="Sus especialidades son..." />
+									<small class="form-text text-muted">Elija sus especialidades m&eacute;dicas.</small>
 										
 								</div>
 							</div>							
@@ -150,7 +148,7 @@
 							<thead class="thead-dark">
 								<tr>
 									<th scope="col">#</th>
-									<th scope="col">Especialidade</th>
+									<th scope="col">Especialidad</th>
 									<th scope="col">Excluir</th>
 								</tr>
 							</thead>
