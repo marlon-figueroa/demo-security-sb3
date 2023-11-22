@@ -18,7 +18,7 @@ public class Agendamento extends AbstractEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "id_especialidade")
-	private Especialidade especialidade;
+	private Especialidade especialidad;
 
 	@ManyToOne
 	@JoinColumn(name = "id_medico")
@@ -36,12 +36,12 @@ public class Agendamento extends AbstractEntity {
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate dataConsulta;
 
-	public Especialidade getEspecialidade() {
-		return especialidade;
+	public Especialidade getEspecialidad() {
+		return especialidad;
 	}
 
-	public void setEspecialidade(Especialidade especialidade) {
-		this.especialidade = especialidade;
+	public void setEspecialidad(Especialidade especialidad) {
+		this.especialidad = especialidad;
 	}
 
 	public Medico getMedico() {

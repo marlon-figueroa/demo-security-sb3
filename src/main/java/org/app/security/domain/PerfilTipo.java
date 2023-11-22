@@ -6,10 +6,10 @@ public enum PerfilTipo {
 	MEDICO(2, "MEDICO"), 
 	PACIENTE(3, "PACIENTE");
 
-	private long cod;
-	private String desc;
+	private final long cod;
+	private final String desc;
 
-	private PerfilTipo(long cod, String desc) {
+	PerfilTipo(long cod, String desc) {
 		this.cod = cod;
 		this.desc = desc;
 	}

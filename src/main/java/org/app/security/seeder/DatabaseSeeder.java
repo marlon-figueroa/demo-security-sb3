@@ -19,10 +19,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class DatabaseSeeder {
 
-	private Logger logger = LoggerFactory.getLogger(DatabaseSeeder.class);
-	private UsuarioRepository userRepository;
-	private JdbcTemplate jdbcTemplate;
-	private PerfilRepository perfilRepository;
+	private final Logger logger = LoggerFactory.getLogger(DatabaseSeeder.class);
+	private final UsuarioRepository userRepository;
+	private final JdbcTemplate jdbcTemplate;
+	private final PerfilRepository perfilRepository;
 
 	public DatabaseSeeder(UsuarioRepository userRepository, PerfilRepository perfilRepository,
 			JdbcTemplate jdbcTemplate) {

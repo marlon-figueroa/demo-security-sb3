@@ -64,7 +64,7 @@ public class AgendamentoService {
 	public void editar(Agendamento agendamento, String email) {
 		Agendamento ag = buscarPorIdEUsuario(agendamento.getId(), email);
 		ag.setDataConsulta(agendamento.getDataConsulta());
-		ag.setEspecialidade(agendamento.getEspecialidade());
+		ag.setEspecialidad(agendamento.getEspecialidad());
 		ag.setHorario(agendamento.getHorario());
 		ag.setMedico(agendamento.getMedico());
 

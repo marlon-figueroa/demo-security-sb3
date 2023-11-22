@@ -60,10 +60,10 @@ public class AgendamentoController {
 	@PostMapping({ "/salvar" })
 	public String salvar(@AuthenticationPrincipal User user, RedirectAttributes attr, Agendamento agendamento) {
 		Paciente paciente = pacienteService.buscarPorUsuarioEmail(user.getUsername());
-		String titulo = agendamento.getEspecialidade().getTitulo();
+		String titulo = agendamento.getEspecialidad().getTitulo();
 		Especialidade especialidade = especialidadeService.buscarPorTitulos(new String[] { titulo }).stream()
 				.findFirst().get();
-		agendamento.setEspecialidade(especialidade);
+		agendamento.setEspecialidad(especialidade);
 		agendamento.setPaciente(paciente);
 		service.salvar(agendamento);
 		attr.addFlashAttribute("sucesso", "Su consulta fue agendada con exito.");
@@ -112,10 +112,10 @@ public class AgendamentoController {
 	@PreAuthorize("hasAnyAuthority('PACIENTE', 'MEDICO')")
 	@PostMapping("/editar")
 	public String editarConsulta(Agendamento agendamento, RedirectAttributes attr, @AuthenticationPrincipal User user) {
-		String titulo = agendamento.getEspecialidade().getTitulo();
+		String titulo = agendamento.getEspecialidad().getTitulo();
 		Especialidade especialidade = especialidadeService.buscarPorTitulos(new String[] { titulo }).stream()
 				.findFirst().get();
-		agendamento.setEspecialidade(especialidade);
+		agendamento.setEspecialidad(especialidade);
 
 		service.editar(agendamento, user.getUsername());
 		attr.addFlashAttribute("sucesso", "Su consulta fue alterada con exito.");
