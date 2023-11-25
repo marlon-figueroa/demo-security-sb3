@@ -50,13 +50,13 @@ public class UsuarioService implements UserDetailsService {
 		Usuario usuario = buscarPorEmailEAtivo(username)
 				.orElseThrow(() -> new UsernameNotFoundException("Usuario " + username + " no encontrado."));
 		return new User(usuario.getEmail(), usuario.getSenha(),
-				AuthorityUtils.createAuthorityList(getAtuthorities(usuario.getPerfis())));
+				AuthorityUtils.createAuthorityList(getAtuthorities(usuario.getPerfil())));
 	}
 
-	private String[] getAtuthorities(List<Perfil> perfis) {
-		String[] authorities = new String[perfis.size()];
-		for (int i = 0; i < perfis.size(); i++) {
-			authorities[i] = perfis.get(i).getDesc();
+	private String[] getAtuthorities(List<Perfil> perfil) {
+		String[] authorities = new String[perfil.size()];
+		for (int i = 0; i < perfil.size(); i++) {
+			authorities[i] = perfil.get(i).getDesc();
 		}
 		return authorities;
 	}
@@ -84,8 +84,8 @@ public class UsuarioService implements UserDetailsService {
 	}
 
 	@Transactional(readOnly = true)
-	public Usuario buscarPorIdEPerfis(Long usuarioId, Long[] perfisId) {
-		return repository.findByIdAndPerfis(usuarioId, perfisId).orElseThrow(() -> new UsernameNotFoundException("Usuario inexistente!"));
+	public Usuario buscarPorIdEPerfil(Long usuarioId, Long[] perfilId) {
+		return repository.findByIdAndPerfil(usuarioId, perfilId).orElseThrow(() -> new UsernameNotFoundException("Usuario inexistente!"));
 	}
 
 	public static boolean isSenhaCorreta(String senhaDigitada, String senhaArmazenada) {
@@ -109,7 +109,7 @@ public class UsuarioService implements UserDetailsService {
 
 	@Transactional(readOnly = true)
 	public Optional<Usuario> buscarPorEmailEAtivo(String email) {
-		return repository.findByEmailAndAtivo(email);
+		return repository.findByEmailAndActivo(email);
 	}
 
 	public void emailDeConfirmacaoDeCadastro(String email) throws MessagingException {
@@ -124,7 +124,7 @@ public class UsuarioService implements UserDetailsService {
 		if (usuario.hasNotId()) {
 			throw new AccesoNegadoException("No fue posible activar si registro. Ingrese en " + "contacto con soporte.");
 		}
-		usuario.setAtivo(true);
+		usuario.setActivo(true);
 	}
 
 	@Transactional(readOnly = false)

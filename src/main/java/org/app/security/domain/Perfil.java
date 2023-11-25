@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "perfis")
+@Table(name = "perfil")
 public class Perfil extends AbstractEntity {
 
 	@Column(name = "descricao", nullable = false, unique = true)
