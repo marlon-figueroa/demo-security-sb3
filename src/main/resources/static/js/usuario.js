@@ -14,9 +14,9 @@ $(document).ready(function() {
 		columns : [
 				{data : 'id'},
 				{data : 'email'},
-				{	data : 'ativo', 
-					render : function(ativo) {
-						return ativo == true ? 'Sim' : 'Não';
+				{	data : 'activo', 
+					render : function(activo) {
+						return activo == true ? 'Sim' : 'Não';
 					}
 				},
 				{	data : 'perfis',									 

@@ -11,8 +11,7 @@
             <main role="main">
 
                 <section class="jumbotron text-center">
-                    <img class="d-block mx-auto" th:src="@{/image/spring-security.png}"
-                         width="72" height="72">
+                    <!-- <img class="d-block mx-auto" th:src="@{/image/spring-security.png}" width="72" height="72"> -->
                     <div class="container">
                         <h1 class="jumbotron-heading">DOCTOR<strong class="header-section">ESA</strong></h1>
                         <p class="lead text-muted">M&eacute;dicos e Especialistas</p>
@@ -52,23 +51,23 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="perfis">Perfil</label>
-                                        <select id="perfis" class="custom-select" size="4"
-                                                th:field="*{perfis}" multiple required>
+                                        <label for="perfil">Perfil</label>
+                                        <select id="perfil" class="custom-select" size="4"
+                                                th:field="*{perfil}" multiple required>
                                             <option value="1">Administrador</option>
                                             <option value="2">M&eacute;dico</option>
                                             <option value="3">Paciente</option>
                                         </select>
-                                        <input type="hidden" value="0" name="perfis" />
+                                        <input type="hidden" value="0" name="perfil" />
                                         <div class="invalid-feedback">Por lo menos un perfil es requerido.</div>
                                     </div>
 
                                     <div class="mb-3">
                                         <div class="custom-control custom-switch">
                                             <input type="checkbox" class="custom-control-input" 
-                                                   th:field="*{ativo}" id="ativo" 
-                                                   th:if="${ativo == true ? 'checked=checked' : ''}" />
-                                            <label class="custom-control-label" for="ativo">Registro Activo</label>
+                                                   th:field="*{activo}" id="ativo" 
+                                                   th:if="${activo == true ? 'checked=checked' : ''}" />
+                                            <label class="custom-control-label" for="activo">Registro Activo</label>
                                         </div>
                                     </div>
 
@@ -92,10 +91,10 @@
         </section>
         <script th:src="~{}" th:fragment="js"></script>
         <script th:inline="javascript" th:fragment="inlinescript">
-            $('#perfis').ready(function () {
-                var perfis = [[${usuario.perfis}]];
-                $.each(perfis, function (k, v) {
-                    $('#perfis option[value="' + v.id + '"]').attr('selected', 'selected');
+            $('#perfil').ready(function () {
+                var perfil = [[${usuario.perfil}]];
+                $.each(perfil, function (k, v) {
+                    $('#perfil option[value="' + v.id + '"]').attr('selected', 'selected');
                 });
             });
         </script>

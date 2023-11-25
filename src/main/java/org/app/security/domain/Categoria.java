@@ -1,10 +1,6 @@
 package org.app.security.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "categorias")
@@ -17,14 +13,6 @@ public class Categoria {
 
     @Column
     private String titulo;
-
-    @JsonBackReference
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "subcategoria")
-    private Categoria subcategoria;
-
-    @OneToMany(mappedBy = "subcategoria")
-    private List<Categoria> subCategorias = new ArrayList();
 
     /*
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -49,22 +37,6 @@ public class Categoria {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
-    }
-
-    public Categoria getSubcategoria() {
-        return subcategoria;
-    }
-
-    public void setSubcategoria(Categoria subcategoria) {
-        this.subcategoria = subcategoria;
-    }
-
-    public List<Categoria> getSubCategorias() {
-        return subCategorias;
-    }
-
-    public void setSubCategorias(List<Categoria> subCategorias) {
-        this.subCategorias = subCategorias;
     }
 
     @Override

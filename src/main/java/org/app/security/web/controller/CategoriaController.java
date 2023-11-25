@@ -1,7 +1,6 @@
 package org.app.security.web.controller;
 
 import org.app.security.domain.Categoria;
-import org.app.security.domain.Especialidade;
 import org.app.security.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +38,7 @@ public class CategoriaController {
 	public String salvar(Categoria entity, RedirectAttributes attr) {
 		service.salvar(entity);
 		attr.addFlashAttribute("sucesso", "Operación realizada con éxito!");
-		return "redirect:/categorias/registro";
+		return "redirect:/categorias/lista";
 	}
 
 }

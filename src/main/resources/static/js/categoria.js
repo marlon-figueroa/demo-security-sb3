@@ -14,7 +14,6 @@ $(document).ready(function () {
         columns: [
             {data: 'id'},
             {data: 'titulo'},
-            {data: 'subcategoria'},
             {orderable: false, 
              data: 'id',
                 "render": function(id) {

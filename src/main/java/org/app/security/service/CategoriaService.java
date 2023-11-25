@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -33,7 +32,7 @@ public class CategoriaService {
         datatables.setRequest(request);
 		datatables.setColunas(DatatablesColumnas.CATEGORIAS);
 		Page<?> page = datatables.getSearch().isEmpty()
-				? repository.findAll(datatables.getPageable())
+				? repository.findPage(datatables.getPageable())
 				: repository.findAllByTitulo(datatables.getSearch(), datatables.getPageable());
 		return datatables.getResponse(page);
     }
@@ -45,9 +44,8 @@ public class CategoriaService {
 
     @Transactional(readOnly = false)
     public void editar(Categoria categoria) {
-        Categoria p2 = repository.findById(categoria.getId()).get();
-        p2.setTitulo(categoria.getTitulo());
-        p2.setSubcategoria(categoria.getSubcategoria());
+        Categoria c2 = repository.findById(categoria.getId()).get();
+        c2.setTitulo(categoria.getTitulo());
     }
 
 }

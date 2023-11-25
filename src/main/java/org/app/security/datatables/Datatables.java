@@ -9,6 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 @Component
@@ -27,6 +30,10 @@ public class Datatables {
 		json.put("recordsTotal", page.getTotalElements());
 		json.put("recordsFiltered", page.getTotalElements());
 		json.put("data", page.getContent());
+
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		String prettyJsonString = gson.toJson(json);
+        System.out.println(prettyJsonString);
 		return json;
 	}
 
