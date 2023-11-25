@@ -80,7 +80,7 @@ $('#data').on('blur', function () {
  * Datatable histórico de consultas
 */
 $(document).ready(function() {
-    moment.locale('pt-BR');
+    moment.locale('es-ES');
     var table = $('#table-paciente-historico').DataTable({
         searching : false,
         lengthMenu : [ 5, 10 ],

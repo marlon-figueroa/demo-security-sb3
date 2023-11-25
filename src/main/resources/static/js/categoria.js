@@ -1,6 +1,6 @@
 $(document).ready(function () {
 	moment.locale('es-ES');
-    var table = $('#table-especializacao').DataTable({
+    var table = $('#table-categorias').DataTable({
     	searching: true,
     	order: [[ 1, "asc" ]],
     	lengthMenu: [5, 10],
@@ -8,23 +8,24 @@ $(document).ready(function () {
         serverSide: true,
         responsive: true,
         ajax: {
-            url: '/especialidades/datatables/server',
+            url: '/categorias/datatables/server',
             data: 'data'
         },
         columns: [
             {data: 'id'},
             {data: 'titulo'},
+            {data: 'subcategoria'},
             {orderable: false, 
              data: 'id',
                 "render": function(id) {
-                    return '<a class="btn btn-success btn-sm btn-block" href="/especialidades/editar/'+ 
+                    return '<a class="btn btn-success btn-sm btn-block" href="/categorias/editar/'+ 
                     	id +'" role="button"><i class="fas fa-edit"></i></a>';
                 }
             },
             {orderable: false,
              data: 'id',
                 "render": function(id) {
-                    return '<a class="btn btn-danger btn-sm btn-block" href="/especialidades/excluir/'+ 
+                    return '<a class="btn btn-danger btn-sm btn-block" href="/categorias/excluir/'+ 
                     	id +'" role="button" data-toggle="modal" data-target="#confirm-modal"><i class="fas fa-times-circle"></i></a>';
                 }               
             }

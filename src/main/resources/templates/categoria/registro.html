@@ -6,13 +6,12 @@
 </head>
 
 <body>
-
 	<section class="layout-content" layout:fragment="corpo">
 
 		<main role="main">
 
 			<section class="jumbotron text-center">
-				<img class="d-block mx-auto mb-4" th:src="@{/image/spring-security.png}" width="72" height="72">
+				<!-- <img class="d-block mx-auto mb-4" th:src="@{/image/spring-security.png}" width="72" height="72"> -->
 				<div class="container">
 					<h1 class="jumbotron-heading">DOCTOR<strong class="header-section">ESA</strong></h1>
 					<p class="lead text-muted">M&eacute;dicos y Especialistas</p>
@@ -25,24 +24,21 @@
 					<div class="d-flex justify-content-center">
 						<div class="col-md-12">
 							<div th:replace="~{fragments/alert}"></div>
-							<form th:action="@{/especialidades/salvar}" th:object="${especialidade}" method="POST"
+							<form th:action="@{/categorias/salvar}" th:object="${categoria}" method="POST"
 								class="was-validated">
 
 								<div class="form-group row">
-									<label for="especialidade" class="col-sm-2 col-form-label">Especialidad</label>
+									<label for="titulo" class="col-sm-2 col-form-label">Titulo</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control" th:field="*{titulo}" id="especialidade"
-											placeholder="Clínico General" required />
-										<div class="invalid-feedback">Especialidad es requerida.</div>
+										<input type="text" class="form-control" th:field="*{titulo}" id="titulo"
+											placeholder="Ingrese titulo" required />
+										<div class="invalid-feedback">El titulo es requerido.</div>
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="especialidade"
-										class="col-sm-2 col-form-label">Descripci&oacute;n</label>
+									<label for="Categoria Padre" class="col-sm-2 col-form-label">Descripci&oacute;n</label>
 									<div class="col-sm-10">
-										<textarea class="form-control" th:field="*{descricao}" id="descricao"
-											rows="3"></textarea>
-										<small class="form-text text-muted">Si lo desea, adicione una descripci&oacute;n sobre la especialidad.</small>
+										
 									</div>
 								</div>
 
@@ -58,14 +54,15 @@
 
 							<hr />
 
-							<h2>Lista de Especialidades</h2>
+							<h2>Lista de Categorias</h2>
 
-							<table id="table-especializacao" class="table table-sm table-striped table-bordered nowrap"
+							<table id="table-categorias" class="table table-sm table-striped table-bordered nowrap"
 								style="width:100%">
 								<thead class="thead-dark">
 									<tr>
 										<th scope="col">#</th>
-										<th scope="col">Especialidad</th>
+										<th scope="col">Titulo</th>
+										<th scope="col">Padre</th>
 										<th scope="col">Editar</th>
 										<th scope="col">Excluir</th>
 									</tr>
@@ -78,7 +75,8 @@
 
 		</main>
 	</section>
-	<script th:src="@{/js/especialidade.js?(v=${version})}" th:fragment="js"></script>
+
+    <script th:src="@{/js/categoria.js?(v=${version})}" th:fragment="js"></script>
 	<script th:inline="javascript" th:fragment="inlinescript"></script>
 </body>
 

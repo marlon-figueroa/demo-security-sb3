@@ -1,6 +1,6 @@
 //datatables - lista de médicos
 $(document).ready(function() {
-	moment.locale('pt-BR');
+	moment.locale('es-ES');
 	var table = $('#table-usuarios').DataTable({
 		searching : true,
 		lengthMenu : [ 5, 10 ],

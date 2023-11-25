@@ -1,13 +1,18 @@
 package org.app.security.service;
 
+import org.app.security.datatables.Datatables;
+import org.app.security.datatables.DatatablesColumnas;
 import org.app.security.domain.Categoria;
-import org.app.security.domain.Paciente;
 import org.app.security.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CategoriaService {
@@ -15,14 +20,22 @@ public class CategoriaService {
     @Autowired
     CategoriaRepository repository;
 
+    @Autowired
+	private Datatables datatables;
+
     @Transactional(readOnly = true)
     public Categoria buscarPorTitulo(String titulo) {
         return repository.findByTitulo(titulo).orElse(new Categoria());
     }
 
     @Transactional(readOnly = true)
-    public List<Categoria> findParents(String titulo) {
-        return repository.findParents();
+    public Map<String, Object> findCategorias(HttpServletRequest request) {
+        datatables.setRequest(request);
+		datatables.setColunas(DatatablesColumnas.CATEGORIAS);
+		Page<?> page = datatables.getSearch().isEmpty()
+				? repository.findAll(datatables.getPageable())
+				: repository.findAllByTitulo(datatables.getSearch(), datatables.getPageable());
+		return datatables.getResponse(page);
     }
 
     @Transactional(readOnly = false)

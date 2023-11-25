@@ -9,6 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "categorias")
 public class Categoria {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -30,7 +31,10 @@ public class Categoria {
     @OneToMany(mappedBy = "categoria")
     private List<Producto> productos = new ArrayList();
     */
-
+    
+    public Categoria() {
+    }
+    
     public Long getId() {
         return id;
     }

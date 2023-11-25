@@ -1,5 +1,5 @@
 $(document).ready(function () {
-	moment.locale('pt-BR');
+	moment.locale('es-ES');
     var table = $('#table-especializacao').DataTable({
     	searching: true,
     	order: [[ 1, "asc" ]],
