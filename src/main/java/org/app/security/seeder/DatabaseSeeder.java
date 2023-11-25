@@ -38,7 +38,7 @@ public class DatabaseSeeder {
 	}
 
 	private void seedRolesTable() {
-		String sql = "SELECT id, descricao FROM perfis r";
+		String sql = "SELECT id, descricao FROM perfil r";
 		List<Perfil> r = jdbcTemplate.query(sql, (resultSet, rowNum) -> null);
 		if (r == null || r.size() <= 0) {
 			Perfil roleAdmin = new Perfil();
@@ -72,7 +72,7 @@ public class DatabaseSeeder {
 			Usuario user = new Usuario();
 			user.setEmail("marlon.f.1993@gmail.com");
 			user.setSenha(new BCryptPasswordEncoder().encode("orion1993"));
-			user.setAtivo(true);
+			user.setActivo(true);
 			List<Perfil> roles = new ArrayList<>();
 			String argString = "Error: Role is not found.";
 			Perfil adminRole = perfilRepository.findByDesc(PerfilTipo.ADMIN.getDesc())
@@ -84,7 +84,7 @@ public class DatabaseSeeder {
 			roles.add(adminRole);
 			roles.add(userRole);
 			roles.add(pacienteRole);
-			user.setPerfis(roles);
+			user.setPerfil(roles);
 			userRepository.save(user);
 			logger.info("Users Seeded");
 		} else {

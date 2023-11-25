@@ -26,15 +26,15 @@ public class Usuario extends AbstractEntity {
 	private String senha;
 
 	@ManyToMany
-	@JoinTable(name = "usuarios_tem_perfis", joinColumns = {
+	@JoinTable(name = "usuarios_tem_perfil", joinColumns = {
 			@JoinColumn(name = "usuario_id", referencedColumnName = "id") 
 	}, inverseJoinColumns = {
 			@JoinColumn(name = "perfil_id", referencedColumnName = "id") 
 	})
-	private List<Perfil> perfis;
+	private List<Perfil> perfil;
 
-	@Column(name = "ativo", nullable = false, columnDefinition = "TINYINT(1)")
-	private boolean ativo;
+	@Column(name = "activo", nullable = false, columnDefinition = "TINYINT(1)")
+	private boolean activo;
 
 	@Column(name = "codigo_verificador", length = 6)
 	private String codigoVerificador;
@@ -49,10 +49,10 @@ public class Usuario extends AbstractEntity {
 
 	// adiciona perfil a lista
 	public void addPerfil(PerfilTipo tipo) {
-		if (this.perfis == null) {
-			this.perfis = new ArrayList<>();
+		if (this.perfil == null) {
+			this.perfil = new ArrayList<>();
 		}
-		this.perfis.add(new Perfil(tipo.getCod()));
+		this.perfil.add(new Perfil(tipo.getCod()));
 	}
 
 	public Usuario(String email) {
@@ -75,20 +75,20 @@ public class Usuario extends AbstractEntity {
 		this.senha = senha;
 	}
 
-	public List<Perfil> getPerfis() {
-		return perfis;
+	public List<Perfil> getPerfil() {
+		return perfil;
 	}
 
-	public void setPerfis(List<Perfil> perfis) {
-		this.perfis = perfis;
+	public void setPerfil(List<Perfil> perfil) {
+		this.perfil = perfil;
 	}
 
-	public boolean isAtivo() {
-		return ativo;
+	public boolean isActivo() {
+		return activo;
 	}
 
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
+	public void setActivo(boolean activo) {
+		this.activo = activo;
 	}
 
 	public String getCodigoVerificador() {

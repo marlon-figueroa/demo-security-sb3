@@ -61,7 +61,7 @@ public class UsuarioController {
 	// salvar cadastro de usuarios por administrador
 	@PostMapping("/cadastro/salvar")
 	public String salvarUsuarios(Usuario usuario, RedirectAttributes attr) {
-		List<Perfil> perfis = usuario.getPerfis();
+		List<Perfil> perfis = usuario.getPerfil();
 		if (perfis.size() > 2 || perfis.containsAll(Arrays.asList(new Perfil(1L), new Perfil(3L)))
 				|| perfis.containsAll(Arrays.asList(new Perfil(2L), new Perfil(3L)))) {
 			attr.addFlashAttribute("falha", "Paciente não pode ser Admin e/ou Médico.");
@@ -85,21 +85,21 @@ public class UsuarioController {
 	}
 
 	// pre edicao de cadastro de usuarios
-	@GetMapping("/editar/dados/usuario/{id}/perfis/{perfis}")
+	@GetMapping("/editar/dados/usuario/{id}/perfis/{perfil}")
 	public ModelAndView preEditarCadastroDadosPessoais(@PathVariable("id") Long usuarioId,
-			@PathVariable("perfis") Long[] perfisId) {
-		Usuario us = service.buscarPorIdEPerfis(usuarioId, perfisId);
+			@PathVariable("perfil") Long[] perfilId) {
+		Usuario us = service.buscarPorIdEPerfis(usuarioId, perfilId);
 
-		if (us.getPerfis().contains(new Perfil(PerfilTipo.ADMIN.getCod()))
-				&& !us.getPerfis().contains(new Perfil(PerfilTipo.MEDICO.getCod()))) {
+		if (us.getPerfil().contains(new Perfil(PerfilTipo.ADMIN.getCod()))
+				&& !us.getPerfil().contains(new Perfil(PerfilTipo.MEDICO.getCod()))) {
 
 			return new ModelAndView("usuario/cadastro", "usuario", us);
-		} else if (us.getPerfis().contains(new Perfil(PerfilTipo.MEDICO.getCod()))) {
+		} else if (us.getPerfil().contains(new Perfil(PerfilTipo.MEDICO.getCod()))) {
 
 			Medico medico = medicoService.buscarPorUsuarioId(usuarioId);
 			return medico.hasNotId() ? new ModelAndView("medico/cadastro", "medico", new Medico(new Usuario(usuarioId)))
 					: new ModelAndView("medico/cadastro", "medico", medico);
-		} else if (us.getPerfis().contains(new Perfil(PerfilTipo.PACIENTE.getCod()))) {
+		} else if (us.getPerfil().contains(new Perfil(PerfilTipo.PACIENTE.getCod()))) {
 			ModelAndView model = new ModelAndView("error");
 			model.addObject("status", 403);
 			model.addObject("error", "Área Restrita");

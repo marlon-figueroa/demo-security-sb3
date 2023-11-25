@@ -74,7 +74,7 @@ public class AgendamentoService {
 	public Agendamento buscarPorIdEUsuario(Long id, String email) {
 
 		return repository.findByIdAndPacienteOrMedicoEmail(id, email)
-				.orElseThrow(() -> new AccesoNegadoException("Acesso negado ao usuário: " + email));
+				.orElseThrow(() -> new AccesoNegadoException("Acceso negado con usuario: " + email));
 	}
 
 	@Transactional(readOnly = false)
